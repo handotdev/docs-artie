@@ -15,9 +15,6 @@
       "to": "#0387b4"
     }
   },
-  "modeToggle": {
-    "default": "dark"
-  },
   "backgroundImage": "/background.svg",
   "topbarLinks": [
     {
@@ -54,28 +51,43 @@
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Home",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "start"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "☁️ Artie Cloud",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "artie-cloud/fixed-ip-addresses",
+        "artie-cloud/dashboard-functionality"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "☁️ Real-time sources",
       "pages": [
-        "api-reference/introduction"
+        "real-time-sources/overview",
+        "real-time-sources/documentdb",
+        "real-time-sources/dynamodb",
+        "real-time-sources/microsoft-sql-server",
+        "real-time-sources/mongodb",
+        {
+          "group": "MySQL",
+          "pages": [
+            "real-time-sources/mysql",
+            "real-time-sources/mysql/amazon-rds-or-aurora"
+          ]
+        },
+        {
+          "group": "PostgreSQL",
+          "pages": [
+            "real-time-sources/postgresql",
+            "real-time-sources/postgresql/gcp-cloudsql",
+            "real-time-sources/postgresql/amazon-rds",
+            "real-time-sources/postgresql/supabase",
+            "real-time-sources/postgresql/troubleshooting"
+          ]
+        }
       ]
     },
     {

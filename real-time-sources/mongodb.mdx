@@ -1,0 +1,79 @@
+---
+title: MongoDB
+description: In this section, we will go over how to gather your credentials and prepare your MongoDB server to start providing CDC logs.
+---
+
+## Introduction
+
+We will be running Debezium to fetch CDC logs from MongoDB by using [Change Streams](https://www.mongodb.com/docs/manual/changeStreams/) which is a more performant and reliable approach than tailing the `oplog`.&#x20;
+
+<Info>
+MongoDB server **must** be in a replica set. If your deployment only has a `standalone` server, you can create a replica set with one member.
+
+Need help? Check out this [guide](https://www.mongodb.com/docs/manual/tutorial/convert-standalone-to-replica-set/).
+</Info>
+
+## Settings required
+
+| Name                  | Description                                                                                                                                                                   | Default value |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----------: |
+| Connection string     | Click [here](https://www.mongodb.com/docs/manual/reference/connection-string/) to see how to retrieve this.                                                                   |       -       |
+| Username              | Username for authentication into your database.                                                                                                                               |       -       |
+| Password              | Password for authentication into your database.                                                                                                                               |       -       |
+| Authentication source | MongoDB [authSource](https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource) (which database should we authenticate against) |     admin     |
+
+### Creating a service account
+
+You can either use the Atlas UI or use MongoDB CLI.
+
+#### Option #1 - Atlas UI
+
+* Click on "Database Access" on the left
+* Click on "Add New Database User"
+* Under "Database User Privileges", open "Built-in Role" and Select "Only read any database"
+
+<Frame><img src="/assets/image.png" /></Frame>
+
+#### Option #2 - Service account script
+
+```javascript
+# If the user does not exist.
+use admin;
+db.createUser({
+    user: "robin1",
+    pwd: "<password>",
+    roles: ["readAnyDatabase", {
+        role: "read",
+        db: "local"
+    }]
+});
+
+# If the user already exists
+db.updateUser("robin1", {
+    roles: ["readAnyDatabase", {
+        role: "read",
+        db: "local"
+    }]
+});
+```
+
+### Connection string
+
+1. Go to Atlas UI
+2. Find your deployment and click "Connect"
+
+We support both MongoDB SRV format or standard connection string.
+
+<Frame><img src="/assets/image (1).png" /></Frame>
+
+### Supported types
+
+Artie supports every MongoDB data type 🙂
+
+## Running it yourself
+
+#### Self-hosted notes:
+
+* `value.converter` must be set to `org.apache.kafka.connect.json.JsonConverter`
+* `value.converter.schemas.enable` must be set to `true`
+* [Example Debezium connector settings](https://github.com/artie-labs/transfer/blob/master/examples/mongodb/register-mongodb-connector.json)

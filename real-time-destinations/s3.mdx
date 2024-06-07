@@ -1,0 +1,102 @@
+---
+description: This page will go over how to configure and run our S3 destination.
+---
+
+# S3
+
+## Overview
+
+To run our S3 connector, you will need to specify the following:
+
+1. Parent bucket
+2. [Credentials clause](https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-authorization.html#copy-credentials)
+3. Desired output format
+4. (Optional) Prefix
+
+### Bucket Structure
+
+Artie Transfer will save table data in this particular format:
+
+```
+/{{bucketName}}/{{optionalPrefix}}/{{fullyQualifiedTableName}}/{{YYYY-MM-DD}}
+
+Example: /artie/foo/db.schema.tableName/2023-08-06
+```
+
+Upon each flush, there will be a new file created within this folder, the filename is: `{{unix_timestamp}}_{{randomString(4)}}.parquet.gz`
+
+* Unix Timestamp is the latest timestamp of row processed
+* Random string is created to allow parallelism&#x20;
+
+## Creating a service account
+
+```hcl
+provider "aws" {
+  region = "us-east-1" # Your AWS Region
+}
+
+resource "aws_iam_user" "artie_transfer" {
+  name = "artie-transfer" # Your service account name
+}
+
+resource "aws_iam_policy" "s3_read_write_policy" {
+  name        = "s3-read-write-policy"
+  description = "Ability to list, read and write to the bucket"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:ListBucket"
+        ]
+        Resource = "arn:aws:s3:::your-bucket-name"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject"
+        ]
+        Resource = "arn:aws:s3:::your-bucket-name/*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_user_policy_attachment" "user_policy_attachment" {
+  user       = aws_iam_user.artie_transfer.name
+  policy_arn = aws_iam_policy.s3_read_write_policy.arn
+}
+
+resource "aws_iam_access_key" "artie_transfer_key" {
+  user    = aws_iam_user.artie_transfer.name
+}
+
+output "access_key_id" {
+  value     = aws_iam_access_key.artie_transfer_key.id
+  sensitive = false
+}
+
+output "secret_access_key" {
+  value     = aws_iam_access_key.artie_transfer_key.secret
+  sensitive = true
+}
+
+```
+
+## Typing
+
+| Artie Type  | Parquet Type                  |
+| ----------- | ----------------------------- |
+| Float       | Float                         |
+| Integer     | Integer                       |
+| Numeric     | DECIMAL(p,s)                  |
+| Boolean     | Boolean                       |
+| String      | String                        |
+| Struct      | JSON string                   |
+| Array\<any> | Array\<string>                |
+| Timestamp   | Int64, Unix timestamp (in ms) |
+| Time        | String                        |
+| Date        | String                        |
