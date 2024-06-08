@@ -51,7 +51,7 @@
   ],
   "navigation": [
     {
-      "group": "Home",
+      "group": "🏠 Home",
       "pages": [
         "start"
       ]
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "group": "☁️ Real-time sources",
+      "group": "Real-time sources",
       "pages": [
         "real-time-sources/overview",
         "real-time-sources/documentdb",
@@ -88,6 +88,60 @@
             "real-time-sources/postgresql/troubleshooting"
           ]
         }
+      ]
+    },
+    {
+      "group": "Real-time Destinations",
+      "pages": [
+        "real-time-destinations/overview",
+        "real-time-destinations/bigquery",
+        "real-time-destinations/microsoft-sql-server",
+        "real-time-destinations/s3",
+        "real-time-destinations/snowflake",
+        "real-time-destinations/redshift"
+      ]
+    },
+    {
+      "group": "Running Transfer",
+      "pages": [
+        "running-transfer/overview",
+        "running-transfer/options",
+        "running-transfer/examples"
+      ]
+    },
+    {
+      "group": "Telemetry",
+      "pages": [
+        "telemetry/overview"
+      ]
+    },
+    {
+      "group": "🧑‍💻 Tutorials",
+      "pages": [
+        "tutorials/enabling-bigquery-time-partitioning",
+        "tutorials/enabling-ssh-tunneling",
+        "tutorials/preventing-wal-growth-on-postgres-running-on-aws-rds",
+        "tutorials/tables-without-primary-key-s"
+      ]
+    },
+    {
+      "group": "💻 OS Tutorials",
+      "pages": [
+        "os-tutorials/arties-typing-library",
+        "os-tutorials/running-redshift",
+        "os-tutorials/setting-up-pub-sub",
+        "os-tutorials/debezium-topic-reroute-smt",
+        "more-ways-for-support"
+      ]
+    },
+    {
+      "group": "⚖️ Legal",
+      "pages": [
+        "legal/terms-of-service",
+        "legal/data-processing-addendum",
+        "legal/privacy-policy",
+        "legal/subprocessors",
+        "legal/elv2-license-addendum"
       ]
     },
     {

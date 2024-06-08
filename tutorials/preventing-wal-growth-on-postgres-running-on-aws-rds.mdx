@@ -1,10 +1,7 @@
 ---
-description: >-
-  In this document, we will discuss how to prevent WAL growth for a Postgres
-  database running on AWS RDS.
+title: Preventing WAL growth on Postgres running on AWS RDS
+description: In this document, we will discuss how to prevent WAL growth for a Postgres database running on AWS RDS.
 ---
-
-# Preventing WAL growth on Postgres running on AWS RDS
 
 Last updated: 04/17/2024
 
@@ -43,7 +40,7 @@ INSERT INTO test_heartbeat_table (id, ts) VALUES (1, NOW());
 
 2. Check `Enable Heartbeats` under Deployment Advanced Settings
 
-<figure><img src="../.gitbook/assets/image (35).png" alt=""><figcaption></figcaption></figure>
+<Frame><img src="/assets/image (35).png" alt="" /></Frame>
 
 ## If you do have heartbeats enabled
 
@@ -79,7 +76,8 @@ In addition to enabling heartbeats, it is best practice to set up the following:
 
 ### Advanced commands
 
-<pre class="language-sql"><code class="lang-sql">-- See all replication slots
+```sql
+-- See all replication slots
 SELECT * FROM pg_replication_slots;
 
 -- Drop replication slot
@@ -93,4 +91,4 @@ select pg_drop_replication_slot(REPLICATION_SLOT_NAME);
       pg_current_wal_lsn(), restart_lsn)) AS retained_wal,
   active,
   restart_lsn FROM pg_replication_slots;
-</code></pre>
+```

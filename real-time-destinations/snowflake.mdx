@@ -1,32 +1,31 @@
 ---
+title: Snowflake
 description: Going over how to find your Snowflake settings and outline the typing support.
 ---
-
-# Snowflake
 
 ## Finding your Snowflake settings
 
 ### Getting your username and password
 
-<figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption><p>Create a service account for Transfer to use</p></figcaption></figure>
+<Frame captions="Create a service account for Transfer to use"><img src="/assets/image (10).png" alt="" /></Frame>
 
 ### Getting the Snowflake account identifier
 
 In order for workloads to uniquely identify accounts, we need to pass in your [account identifier](https://docs.snowflake.com/en/user-guide/admin-account-identifier.html).&#x20;
 
-<figure><img src="../.gitbook/assets/snowflake_account_url.gif" alt=""><figcaption><p>Retrieving Account URL</p></figcaption></figure>
+<Frame captions="Retrieving Account URL"><img src="/assets/snowflake_account_url.gif" alt="" /></Frame>
 
 ### Which data warehouse to use?
 
 Part of Snowflake's pricing model is virtual warehouse usage and price scales based on the size of the virtual warehouse.&#x20;
 
-{% hint style="info" %}
+<Info>
 Consider creating a new virtual data warehouse for Transfer so that you can size it independently of your other DWH workloads. Keep in mind that data warehouse size will determine performance and throughput! \
 \
 For the most optimal usage, consider leveraging warehouse suspension policies and size your warehouse appropriately depending on your workloads. Click [here to learn more](https://docs.snowflake.com/en/user-guide/warehouses-overview.html#warehouse-size) from Snowflake's website.
-{% endhint %}
+</Info>
 
-<figure><img src="../.gitbook/assets/image (27).png" alt=""><figcaption></figcaption></figure>
+<Frame><img src="/assets/image (27).png" alt="" /></Frame>
 
 ## Creating a service account for Artie
 
@@ -77,5 +76,5 @@ COMMIT;
 
 Snowflake's native RBAC makes it so that the account that created the resource is the native owner. To change this, assign the ARTIE service account's role to your account and you will be able to operate on the table. See the GIF below on how to fix this problem! \[[source](https://community.snowflake.com/s/question/0D50Z00008GUDFlSAP/insufficient-privileges-to-operate-on-table-even-running-as-accountadmin)]
 
-<figure><img src="../.gitbook/assets/SFLK.gif" alt=""><figcaption></figcaption></figure>
+<Frame><img src="/assets/SFLK.gif" alt="" /></Frame>
 

@@ -4,7 +4,7 @@
 
 In this tutorial, we will learn how to run Debezium Server with Pub/Sub sink and Artie Transfer locally using Docker.
 
-<figure><img src="../.gitbook/assets/image (30).png" alt=""><figcaption></figcaption></figure>
+<Frame><img src="/assets/image (30).png" alt="" /></Frame>
 
 ## Prerequisites
 
@@ -27,7 +27,7 @@ gcloud auth application-default login
 
 To use Pub/Sub in your GCP project, you will also need to enable it. Visit [this link](https://console.cloud.google.com/marketplace/product/google/pubsub.googleapis.com) to enable it.
 
-<figure><img src="../.gitbook/assets/image (28).png" alt=""><figcaption></figcaption></figure>
+<Frame><img src="/assets/image (28).png" alt="" /></Frame>
 
 ## Creating a service account
 
@@ -56,22 +56,23 @@ resource "google_project_iam_member" "transfer" {
 }
 ```
 
-<pre class="language-bash"><code class="lang-bash"><strong>$ terraform init # Install the necessary libraries.
-</strong><strong>$ terraform plan
-</strong>$ terraform apply
-</code></pre>
+```bash
+$ terraform init # Install the necessary libraries.
+$ terraform plan
+$ terraform apply
+```
 
 ## Download the service account credentials
 
 Once your service account has been created, head to the GCP console and create a key for the service account. Save the key as we will be referencing it in the later steps.
 
-<figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<Frame><img src="/assets/image (13).png" alt="" /></Frame>
 
 ## Create the Pub/Sub topic and subscriptions
 
-{% hint style="info" %}
+<Info>
 Debezium will not automatically create topics or subscriptions for you.
-{% endhint %}
+</Info>
 
 ```hcl
 resource "google_pubsub_topic" "customer_topic" {
@@ -199,11 +200,11 @@ services:
 
 When running this, the PostgreSQL database already has some seeded data. As a result, we can see the merge statement being issued to add the seeded data.
 
-<figure><img src="../.gitbook/assets/gif.gif" alt=""><figcaption></figcaption></figure>
+<Frame><img src="/assets/gif.gif" alt="" /></Frame>
 
 Now that PostgreSQL is running locally on `0.0.0.0:5432`, you can open up a SQL editor to interact with the data model. The example below, we are updating the `first_name` of a customer object and the change is directly streamed to Artie.
 
-<figure><img src="../.gitbook/assets/Mar-07-2023 16-51-34.gif" alt=""><figcaption></figcaption></figure>
+<Frame><img src="/assets/Mar-07-2023 16-51-34.gif" alt="" /></Frame>
 
 ## Closing remarks
 

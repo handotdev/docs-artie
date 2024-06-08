@@ -1,8 +1,7 @@
 ---
+title: BigQuery
 description: Going over how to find your BigQuery settings and outline the typing support.
 ---
-
-# BigQuery
 
 ## Finding your BigQuery settings
 
@@ -10,17 +9,17 @@ description: Going over how to find your BigQuery settings and outline the typin
 
 When you are in your GCP project, you can see your GCP project ID at the top of the navigation bar.
 
-<figure><img src="../.gitbook/assets/image (34).png" alt=""><figcaption></figcaption></figure>
+<Frame><img src="/assets/image (34).png" alt="" /></Frame>
 
 ### Getting your default dataset
 
 In order for Transfer to connect to BigQuery, we will need to specify a default dataset.&#x20;
 
-{% hint style="info" %}
+<Info>
 The default dataset is only meant to establish the initial connection with BigQuery. The actual dataset specified within `topicConfig` can be different from the default dataset!
-{% endhint %}
+</Info>
 
-<figure><img src="../.gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
+<Frame><img src="/assets/image (15).png" alt="" /></Frame>
 
 ### Retrieving your credentials
 
